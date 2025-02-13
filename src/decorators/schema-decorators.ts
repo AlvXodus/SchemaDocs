@@ -1,10 +1,11 @@
-import { ISchemaCols, ISchemaTable } from "../interfaces/schemas.interface";
-import { Schemas, TableNames } from "../utils/table_and_cols";
+import { ISchemaCols, ISchemaTable } from "../interfaces/schemas.interface.js";
+import { Schemas, TableNames } from "../utils/table_and_cols.js";
 
 export function SchemaTable(property: ISchemaTable) {
   return function (target: any) {
     const name = property.name ?? target.name;
     const tableName = target.name;
+
     TableNames[tableName] = name;
     if (!Schemas[tableName]) {
       console.warn("This schema has not property");
@@ -16,7 +17,7 @@ export function SchemaTable(property: ISchemaTable) {
 }
 
 export function SchemaCols(property: ISchemaCols) {
-  console.log(property);
+  // console.log(property);
   return function (target: any, propertyName: any) {
     const tableName = target.constructor.name;
     property.name = propertyName;

@@ -1,15 +1,19 @@
-export const Schemas: Record<string, any> = {}; // Ensure global schemas exists
-export const TableNames: Record<string, string> = {};
-function createSchemaTable(name: string) {
+import {
+  ISchemaCols,
+  ISchemas,
+  ITableName,
+} from "../interfaces/schemas.interface.js";
+
+export let Schemas: ISchemas = {}; // Ensure global schemas exists
+export const TableNames: ITableName = {};
+
+export function createSchemaTable(
+  name: string,
+  item: { [inner_key: string]: ISchemaCols } | undefined
+): HTMLTableElement {
   const table = document.createElement("table");
   table.id = name;
   document.body.appendChild(table);
-
-  if (!Schemas[name]) {
-    Schemas[name] = {}; // ✅ Ensure initialization
-  }
-
-  Schemas[name].table = table; // ✅ Store the table in the schema
 
   const tHead = document.createElement("thead");
   const tBody = document.createElement("tbody");
@@ -32,46 +36,37 @@ function createSchemaTable(name: string) {
   tHead.appendChild(headerRow);
   table.appendChild(tHead);
   table.appendChild(tBody);
+
+  for (const key in item) {
+    createSchemaCols(key, table, item[key]!);
+  }
+  return table;
 }
 
-function createSchemaCols(col_name: string, table_name: string) {
-  if (!Schemas[table_name]) {
-    console.warn(
-      `SchemaTable is missing for class ${table_name}, initializing it.`
-    );
-    Schemas[table_name] = {};
-  }
-  const table = Schemas[table_name].table;
-  console.log(table);
-  if (table) {
-    let tBody = table.querySelector("tbody")!;
-    if (!tBody) {
-      tBody = document.createElement("tbody");
-      table.appendChild(tBody);
-    }
-    // Create a new row and add the property name as a cell
-    const row = document.createElement("tr");
-    const cell1 = document.createElement("td");
-    const cell2 = document.createElement("td");
-    const cell3 = document.createElement("td");
-    const cell4 = document.createElement("td");
-    const cell5 = document.createElement("td");
+export function createSchemaCols(
+  col_name: string,
+  table: HTMLTableElement,
+  property: ISchemaCols
+) {
+  // Create a new row and add the property name as a cell
+  const row = document.createElement("tr");
+  const cell1 = document.createElement("td");
+  const cell2 = document.createElement("td");
+  const cell3 = document.createElement("td");
+  const cell4 = document.createElement("td");
+  const cell5 = document.createElement("td");
 
-    cell1.textContent = col_name;
-    cell2.textContent = "Varchar";
-    cell3.textContent = "Not null";
-    cell4.textContent = "";
-    cell5.textContent = "hello";
+  cell1.textContent = col_name;
+  cell2.textContent = property.type;
+  cell3.textContent = property?.nullable ? `${property?.nullable}` : "";
+  cell4.textContent = property?.default ? `${property?.default}` : "";
+  cell5.textContent = property?.example ? `${property?.example}` : "";
 
-    row.appendChild(cell1);
-    row.appendChild(cell2);
-    row.appendChild(cell3);
-    row.appendChild(cell4);
-    row.appendChild(cell5);
-
-    tBody.appendChild(row);
-  }
-
-  // Store the column in the schema
-  // schemas[name][propertyName] = {};
+  row.appendChild(cell1);
+  row.appendChild(cell2);
+  row.appendChild(cell3);
+  row.appendChild(cell4);
+  row.appendChild(cell5);
+  table.appendChild(row);
+  return table;
 }
