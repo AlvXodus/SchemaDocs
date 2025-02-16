@@ -1,0 +1,59 @@
+export function htmlTemplate(template: string) {
+  return `<html>
+    <head>
+      <title>Schema Documentation</title>
+        <style>
+            * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    }
+
+        body {
+        font-family: Arial, sans-serif;
+        /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+        /* display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        /* margin: 0; */
+        }
+
+    table {
+    width: 80%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 30px 5px;
+    }
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+    th {
+    background: #333;
+    color: white;
+    }
+
+    td {
+    border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+    background: #f9f9f9;
+    }
+
+      </style>
+    </head>
+    <body>
+      <h1>Schema Documentation</h1>
+      ${template}
+      
+    </body></html>
+      `;
+}

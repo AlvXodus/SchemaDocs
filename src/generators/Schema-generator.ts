@@ -1,34 +1,35 @@
 import { ISchemas } from "../interfaces/schemas.interface.js";
-import { createSchemaTable } from "../utils/table_and_cols.js";
-
+import { htmlTemplate } from "../templates/html_template.js";
+import {
+  createSchemaTable,
+  Schemas,
+  TableNames,
+} from "../utils/table_and_cols.js";
+import express from "express";
 export default class SchemaGenerator {
-  private static instance: SchemaGenerator;
-  private schemas: ISchemas;
-  private constructor(schemas: ISchemas) {
-    this.schemas = schemas;
-    // console.log(schemas);
-    this.buildTemplate();
+  private entities: any[];
+  constructor(
+    app: express.Application,
+    entities: any[],
+    route = "/schema-docs"
+  ) {
+    this.entities = entities;
+
+    app.get(route, (req, res) => {
+      const template = this.buildTemplate(Schemas);
+      res.send(template);
+    });
+    // this.buildTemplate(Schemas);
   }
 
-  public static generate(schemas: ISchemas): SchemaGenerator {
-    if (this.instance) {
-      return this.instance;
-    } else {
-      return (this.instance = new SchemaGenerator(schemas));
+  public buildTemplate(schemas: ISchemas) {
+    let tablesHTML = "";
+    for (const item of Object.keys(schemas)) {
+      const name = TableNames[item];
+      const title = `<div><h1>${name}</h1></div> <br/>`;
+      const table = createSchemaTable(item, schemas[item]);
+      tablesHTML += title + table; // Use outerHTML to preserve table structure
     }
-  }
-
-  public buildTemplate() {
-    // <div class="schema-body"></div>
-    const schemaBody = document.createElement("div");
-    schemaBody.classList.add("schema-body");
-    for (const item of Object.keys(this.schemas)) {
-      // create table
-      console.log(this.schemas[item]);
-
-      const table = createSchemaTable(item, this.schemas[item]);
-      schemaBody.appendChild(table);
-    }
-    document.body.append(schemaBody);
+    return htmlTemplate(tablesHTML);
   }
 }

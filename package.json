@@ -2,11 +2,10 @@
   "name": "schema-docs",
   "version": "1.0.0",
   "main": "/dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "webpack",
-    "build:prod": "webpack --config webpack.config.prod.js"
+    "build:prod": "webpack --config webpack.config.prod.js",
+    "start": "nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +13,17 @@
   "description": "",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "nodemon": "^3.1.9",
     "ts-loader": "^9.5.2",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "express": "^4.21.2",
+    "ts-node": "^10.9.2"
   }
 }

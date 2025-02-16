@@ -1,29 +1,14 @@
-import { SchemaCols, SchemaTable } from "./decorators/schema-decorators.js";
-import SchemaGenerator from "./generators/Schema-generator.js";
-import { Schemas } from "./utils/table_and_cols.js";
+import express from "express";
+import { User } from "./test/schema";
+import SchemaGenerator from "./generators/Schema-generator";
+import { Product } from "./test/products";
 
-@SchemaTable({ name: "user_table" })
-class User {
-  @SchemaCols({ type: "VARCHAR", nullable: true, example: "Jane doe" })
-  username: string;
+const app = express();
 
-  @SchemaCols({ type: "VARCHAR" })
-  first_name: string;
+console.log("testing...");
 
-  @SchemaCols({ type: "VARCHAR" })
-  last_name: string = "";
+const schemaGenerator = new SchemaGenerator(app, [User, Product]);
 
-  @SchemaCols({ type: "VARCHAR" })
-  email: string = "";
-
-  @SchemaCols({ type: "DECIMAL" })
-  age: number = 0;
-
-  constructor(public name: string) {
-    this.username = name;
-    this.first_name = name;
-  }
-}
-const schemaGenerator = SchemaGenerator.generate(Schemas);
-
-// document.querySelector(".schema-body")!.innerHTML = JSON.stringify(schemas);
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
