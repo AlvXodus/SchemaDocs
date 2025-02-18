@@ -16,6 +16,7 @@
     "allowJs": true,
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
+    "declaration": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,

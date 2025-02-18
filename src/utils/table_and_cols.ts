@@ -1,6 +1,7 @@
 import {
   ISchemaCols,
   ISchemas,
+  ISchemaTable,
   ITableName,
 } from "../interfaces/schemas.interface.js";
 
@@ -13,10 +14,11 @@ export function createSchemaTable(
 ): string {
   const headers = [
     "Columns",
-    "Data Type",
-    "Constraints",
-    "Default Values",
+    "DataType",
+    "Nullable",
+    "Default",
     "Examples",
+    "Description",
   ];
 
   const headerRow = headers.map((text) => `<th>${text}</th>`).join("");
@@ -37,6 +39,8 @@ export function createSchemaTable(
         ${bodyRows}
       </tbody>
     </table>
+       </div>
+    </div>
   `;
 }
 
@@ -51,6 +55,20 @@ export function createSchemaCols(
       <td>${property.nullable ?? ""}</td>
       <td>${property.default ?? ""}</td>
       <td>${property.example ?? ""}</td>
+      <td>${property.description ?? ""}</td>
     </tr>
   `;
+}
+
+export function createSchemaTitle(props: ISchemaTable | undefined): string {
+  return `<div class="container">
+      <div class="header" onclick="toggleTable(this)">
+        <h2>${props?.name}</h2>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <p>
+        description: ${props?.description}
+      </p>
+      <div class="table-container">
+      `;
 }

@@ -1,19 +1,25 @@
-import { SchemaCols, SchemaTable } from "../decorators/schema-decorators";
+import { ColProp, TableProp } from "../decorators/schema-decorators";
 
-@SchemaTable({ name: "Products" })
+@TableProp({ name: "Products" })
 export class Product {
-  @SchemaCols({ type: "VARCHAR", nullable: true, example: "Jane doe" })
+  @ColProp({ type: "VARCHAR", nullable: true, example: "Jane doe" })
   name: string;
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   price: string;
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   category: string;
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   total: string;
 
-  @SchemaCols({ type: "DECIMAL" })
+  @ColProp({ type: "DECIMAL" })
   rating: number;
+}
+
+@TableProp({ name: "Category" })
+export class Category {
+  @ColProp({ type: "VARCHAR", nullable: true, example: "Jane doe" })
+  name: string;
 }

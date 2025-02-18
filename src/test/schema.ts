@@ -1,19 +1,19 @@
-import { SchemaCols, SchemaTable } from "../decorators/schema-decorators";
+import { ColProp, TableProp } from "../decorators/schema-decorators";
 
-@SchemaTable({ name: "Users" })
+@TableProp({ name: "Users" })
 export class User {
-  @SchemaCols({ type: "VARCHAR", nullable: true, example: "Jane doe" })
+  @ColProp({ type: "VARCHAR", nullable: true, example: "Jane doe" })
   username: string;
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   first_name: string;
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   last_name: string = "";
 
-  @SchemaCols({ type: "VARCHAR" })
+  @ColProp({ type: "VARCHAR" })
   email: string = "";
 
-  @SchemaCols({ type: "DECIMAL" })
+  @ColProp({ type: "DECIMAL" })
   age: number = 0;
 }

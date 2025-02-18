@@ -3,12 +3,14 @@ export interface ISchemas {
     [inner_key: string]: ISchemaCols;
   };
 }
+
 export interface ITableName {
-  [key: string]: string;
+  [key: string]: ISchemaTable;
 }
 
 export interface ISchemaTable {
   name?: string;
+  description?: string;
 }
 
 export interface ISchemaCols {

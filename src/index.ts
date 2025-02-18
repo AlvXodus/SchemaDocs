@@ -5,9 +5,11 @@ import { Product } from "./test/products";
 
 const app = express();
 
-console.log("testing...");
-
-const schemaGenerator = new SchemaGenerator(app, [User, Product]);
+const schemaGenerator = SchemaGenerator.initialize(app, [User, Product])
+  .addEntities()
+  .addDescription("")
+  .addTitle("")
+  .build();
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
