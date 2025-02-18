@@ -48,4 +48,11 @@ type SqlDataType =
   | "GEOMETRY"
   | "POINT"
   | "LINESTRING"
-  | "POLYGON";
+  | "POLYGON"
+
+  // Other Data Types
+  | "STRING"
+  | "NUMBER"
+  | "BOOLEAN"
+  | "ARRAY"
+  | "OBJECT";
