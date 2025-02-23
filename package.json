@@ -1,10 +1,10 @@
 {
-  "name": "schema-docs",
+  "name": "schema-table-generator",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "homepage": "https://github.com/AlvXodus",
+  "homepage": "",
   "repository": {
     "url": "https://github.com/AlvXodus/SchemaDocs"
   },
@@ -17,7 +17,6 @@
   "license": "MIT",
   "description": "Generate schema docs for various schema types",
   "devDependencies": {
-    "clean-webpack-plugin": "^4.0.0",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3"
   }
