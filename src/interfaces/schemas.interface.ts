@@ -1,3 +1,5 @@
+import { SqlDataType } from "./sql-types.type";
+
 export interface ISchemas {
   [key: string]: {
     [inner_key: string]: ISchemaCols;

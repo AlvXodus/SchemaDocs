@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2022",
     "module": "CommonJS",
     // "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
@@ -14,8 +14,6 @@
     "useUnknownInCatchVariables": true,
     "alwaysStrict": true,
     "allowJs": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
     "declaration": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,

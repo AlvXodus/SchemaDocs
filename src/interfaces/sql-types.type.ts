@@ -1,4 +1,4 @@
-type SqlDataType =
+export type SqlDataType =
   // String Data Types
   | "CHAR"
   | "VARCHAR"

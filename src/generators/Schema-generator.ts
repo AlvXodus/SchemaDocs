@@ -1,25 +1,20 @@
-import { ISchemas } from "../interfaces/schemas.interface.js";
-import { htmlTemplate } from "../templates/html_template.js";
+import { ISchemas } from "../interfaces/schemas.interface";
+import { htmlTemplate } from "../templates/html_template";
 import {
   createSchemaTable,
   createSchemaTitle,
   Schemas,
   TableNames,
 } from "../utils/table_and_cols.js";
-import express from "express";
 
 export default class SchemaGenerator {
   private entities: any[];
   private route: string;
-  private app: express.Application;
+  private app: any;
   private static instance: SchemaGenerator;
   private title: string;
   private description: string;
-  private constructor(
-    app: express.Application,
-    entities: any[],
-    route = "/schema-docs"
-  ) {
+  private constructor(app: any, entities: any[], route = "/schema-docs") {
     this.entities = entities;
     this.route = route;
     this.app = app;
@@ -34,25 +29,21 @@ export default class SchemaGenerator {
     return this;
   }
 
-  addDescription(description: string) {
+  setDescription(description: string) {
     return this;
   }
 
-  addTitle(title: string) {
+  setTitle(title: string) {
     return this;
   }
 
   build() {
-    this.app.get(this.route, (req, res) => {
+    this.app.get(this.route, (req: any, res: any) => {
       const template = this.buildTemplate(Schemas);
       res.send(template);
     });
   }
-  static initialize(
-    app: express.Application,
-    entities: any[],
-    route = "/schema-docs"
-  ) {
+  static initialize(app: any, entities: any[], route = "/schema-docs") {
     if (!this.instance) {
       this.instance = new SchemaGenerator(app, entities, route);
     }

@@ -1,29 +1,24 @@
 {
   "name": "schema-docs",
-  "version": "1.0.0",
-  "main": "/dist/index.js",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "homepage": "https://github.com/AlvXodus",
+  "repository": {
+    "url": "https://github.com/AlvXodus/SchemaDocs"
+  },
   "scripts": {
-    "build": "webpack",
-    "build:prod": "webpack --config webpack.config.prod.js",
-    "start": "nodemon dist/index.js"
+    "start": "nodemon dist/index.js",
+    "build": "tsup"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "AlvXodus",
+  "license": "MIT",
+  "description": "Generate schema docs for various schema types",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
-    "nodemon": "^3.1.9",
-    "ts-loader": "^9.5.2",
     "tsup": "^8.3.6",
-    "typescript": "^5.7.3",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
-  },
-  "dependencies": {
-    "@types/express": "^4.17.21",
-    "express": "^4.21.2",
-    "ts-node": "^10.9.2"
+    "typescript": "^5.7.3"
   }
 }

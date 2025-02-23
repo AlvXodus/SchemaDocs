@@ -3,7 +3,7 @@ import {
   ISchemas,
   ISchemaTable,
   ITableName,
-} from "../interfaces/schemas.interface.js";
+} from "../interfaces/schemas.interface";
 
 export let Schemas: ISchemas = {}; // Ensure global schemas exists
 export const TableNames: ITableName = {};

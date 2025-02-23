@@ -1,6 +1,6 @@
 export function htmlTemplate(template: string) {
   return `
-    <html>
+  <html>
   <head>
     <title>Schema Documentation</title>
     <style>
@@ -14,10 +14,11 @@ export function htmlTemplate(template: string) {
         width: 80%;
         margin: auto;
         padding: 20px;
-        border: 1px solid #ccc;
+        border: 1px solid #61affe;
         border-radius: 5px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); */
         margin-bottom: 20px;
+        background: rgba(97, 175, 254, 0.1);
       }
       .header {
         display: flex;
@@ -42,7 +43,6 @@ export function htmlTemplate(template: string) {
       table {
         width: 100%;
         border-collapse: collapse;
-        background: white;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 0px 1px rgba(0, 0, 0, 0.2);
@@ -51,9 +51,10 @@ export function htmlTemplate(template: string) {
 
       .schema-header {
         width: 100%;
+        /* max-width: 800px; */
         padding: 20px;
         text-align: left;
-        background-color: #eaffea; 
+        background-color: #eaffea; /* Light green background */
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
@@ -75,26 +76,64 @@ export function htmlTemplate(template: string) {
       }
 
       th {
-        background: #333;
-        color: white;
+        background: rgba(97, 175, 254, 0.7);
       }
 
       td {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid rgba(97, 175, 254, 0.3);
       }
 
       tr:nth-child(even) {
-        background: #f9f9f9;
+        background: rgba(97, 175, 254, 0.2);
+      }
+
+      /* Navbar styling */
+      .navbar {
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .navbar h1 {
+        font-size: 24px;
+        margin: 0;
+      }
+
+      .navbar h5 {
+        font-size: 16px;
+        margin: 0;
+        color: #ccc; /* Light gray for contrast */
+      }
+
+      /* Flex utility class */
+      .flex {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Optional: Add hover effects or other styles */
+      .navbar h1:hover,
+      .navbar h5:hover {
+        opacity: 0.8;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <div class="schema-header">
-      <h1>Schema Documentation</h1>
-      <h2>Powered By: I.C Alvan</h2>
-      <p>version: 0.0.1</p>
-    </div>
+    <nav class="navbar">
+      <div class="flex">
+        <h1>Schema Docs</h1>
+      </div>
+      <div class="flex">
+        <h5>Powered By: AlvXodus</h5>
+      </div>
+    </nav>
     ${template}
+
     <script>
       function toggleTable(header) {
         const container = header.parentElement;
