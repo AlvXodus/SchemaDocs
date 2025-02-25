@@ -1,4 +1,5 @@
 import { ISchemaCols, ISchemaTable } from "../interfaces/schemas.interface";
+
 import { Schemas, TableNames } from "../utils/table_and_cols";
 
 export function TableProp(property: ISchemaTable) {
@@ -13,7 +14,6 @@ export function TableProp(property: ISchemaTable) {
     };
 
     if (!Schemas[tableName]) {
-      console.warn("This schema has not property");
       Schemas[tableName] = {};
     }
   };

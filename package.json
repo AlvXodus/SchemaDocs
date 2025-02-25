@@ -1,9 +1,7 @@
 {
   "name": "schema-table-generator",
-  "version": "0.0.1",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "version": "0.0.4",
+  "type": "module",
   "homepage": "",
   "repository": {
     "url": "https://github.com/AlvXodus/SchemaDocs"
