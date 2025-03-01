@@ -1,6 +1,6 @@
 {
-  "name": "Entity-Docs",
-  "version": "0.0.5",
+  "name": "entity-docs",
+  "version": "0.0.1",
   "type": "module",
   "homepage": "",
   "main": "./cjs/index.js",
