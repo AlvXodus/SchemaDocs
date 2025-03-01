@@ -1,4 +1,8 @@
-export function htmlTemplate(template: string) {
+export function htmlTemplate(
+  template: string,
+  title = "",
+  description = ""
+): string {
   return `
   <html>
   <head>
@@ -132,6 +136,8 @@ export function htmlTemplate(template: string) {
         <h5>Powered By: AlvXodus</h5>
       </div>
     </nav>
+    ${addTitle(title)}
+    ${addDescription(description)}
     ${template}
 
     <script>
@@ -149,4 +155,12 @@ export function htmlTemplate(template: string) {
 </html>
 
   `;
+}
+
+export function addTitle(title: string): string {
+  return `<h1>${title}</h1>`;
+}
+
+export function addDescription(description: string): string {
+  return `<p>${description}</p>`;
 }

@@ -1,1 +1,1 @@
-export * from "./Schema-generator";
+export * from "./Schema-generator.js";

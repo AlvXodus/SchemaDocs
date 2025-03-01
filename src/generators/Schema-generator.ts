@@ -1,25 +1,28 @@
-import { ISchemas } from "../interfaces/schemas.interface";
-import { htmlTemplate } from "../templates/html_template";
+import { ISchemas } from "../interfaces/schemas.interface.js";
+import { htmlTemplate } from "../templates/html_template.js";
 import {
   createSchemaTable,
   createSchemaTitle,
   Schemas,
   TableNames,
 } from "../utils/table_and_cols.js";
-
-export default class SchemaGenerator {
+export class SchemaGenerator {
   private entities: any[];
-  private route: string;
-  private app: any;
   private static instance: SchemaGenerator;
   private title: string;
   private description: string;
-  private constructor(app: any, entities: any[], route = "/schema-docs") {
+  private app: any;
+  private path: string;
+  private constructor(
+    entities: any[],
+    app: any,
+    path: string = "/entity-docs"
+  ) {
     this.entities = entities;
-    this.route = route;
+    this.title = "";
+    this.description = "";
     this.app = app;
-
-    // this.buildTemplate(Schemas);
+    this.path = path;
   }
 
   public addEntities() {
@@ -30,33 +33,38 @@ export default class SchemaGenerator {
   }
 
   setDescription(description: string) {
+    this.description = description;
     return this;
   }
 
   setTitle(title: string) {
+    this.title = title;
     return this;
   }
 
   build() {
-    this.app.get(this.route, (req: any, res: any) => {
-      const template = this.buildTemplate(Schemas);
-      res.send(template);
-    });
+    return this.buildTemplate(Schemas);
   }
-  static initialize(app: any, entities: any[], route = "/schema-docs") {
+  static initialize(entities: any[], app: any) {
     if (!this.instance) {
-      this.instance = new SchemaGenerator(app, entities, route);
+      this.instance = new SchemaGenerator(entities, app);
     }
     return this.instance;
   }
   public buildTemplate(schemas: ISchemas) {
     let tablesHTML = "";
+
     for (const item of Object.keys(schemas)) {
       const tableProp = TableNames[item];
       const title = createSchemaTitle(tableProp);
       const table = createSchemaTable(item, schemas[item]);
       tablesHTML += title + table; // Use outerHTML to preserve table structure
     }
-    return htmlTemplate(tablesHTML);
+    const html = htmlTemplate(tablesHTML, this.title, this.description);
+
+    this.app.get(this.path, (req: any, res: any) => {
+      res.send(html);
+    });
+    return html;
   }
 }

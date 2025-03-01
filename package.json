@@ -1,21 +1,47 @@
 {
-  "name": "schema-table-generator",
-  "version": "0.0.4",
+  "name": "Entity-Docs",
+  "version": "0.0.5",
   "type": "module",
   "homepage": "",
+  "main": "./cjs/index.js",
+  "module": "./esm5/index.js",
+  "es2015": "./esm2015/index.js",
+  "typings": "./types/index.d.ts",
   "repository": {
     "url": "https://github.com/AlvXodus/SchemaDocs"
   },
   "scripts": {
-    "start": "nodemon dist/index.js",
-    "build": "tsup"
+    "build": "npm run build:cjs",
+    "build:clean": "rimraf build",
+    "build:esm2015": "tsc --project tsconfig.prod.esm2015.json",
+    "build:esm5": "tsc --project tsconfig.prod.esm5.json",
+    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
+    "build:umd": "rollup --config rollup.config.js",
+    "build:types": "tsc --project tsconfig.prod.types.json",
+    "build:all": "npm run build:clean && npm run build:esm2015 && npm run build:esm5 && npm run build:cjs && npm run build:umd && npm run build:types"
   },
-  "keywords": [],
+  "keywords": [
+    "entity",
+    "documentation",
+    "schema",
+    "tables",
+    "html"
+  ],
   "author": "AlvXodus",
   "license": "MIT",
   "description": "Generate schema docs for various schema types",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/node": "^22.13.7",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.34.8",
+    "rollup-plugin-dts": "^6.1.1",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0"
   }
 }
