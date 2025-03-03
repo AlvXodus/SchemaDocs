@@ -1,1 +1,1 @@
-export * from "./schema-decorators";
+export * from "./entity-decorators";

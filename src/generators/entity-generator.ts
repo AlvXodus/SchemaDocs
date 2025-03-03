@@ -1,18 +1,20 @@
-import { ISchemas } from "../interfaces/schemas.interface.js";
-import { htmlTemplate } from "../templates/html_template.js";
+import { ISchemas } from "../interfaces/schemas.interface";
+import { htmlTemplate } from "../templates/html_template";
 import {
   createSchemaTable,
   createSchemaTitle,
   Schemas,
   TableNames,
-} from "../utils/table_and_cols.js";
-export class SchemaGenerator {
+} from "../utils/table_and_cols";
+export class EntityGenerator {
   private entities: any[];
-  private static instance: SchemaGenerator;
+  private static instance: EntityGenerator;
   private title: string;
   private description: string;
   private app: any;
   private path: string;
+  private version: string;
+
   private constructor(
     entities: any[],
     app: any,
@@ -21,6 +23,7 @@ export class SchemaGenerator {
     this.entities = entities;
     this.title = "";
     this.description = "";
+    this.version = "";
     this.app = app;
     this.path = path;
   }
@@ -42,12 +45,16 @@ export class SchemaGenerator {
     return this;
   }
 
+  setVersion(version: string) {
+    this.version = version;
+  }
+
   build() {
     return this.buildTemplate(Schemas);
   }
   static initialize(entities: any[], app: any) {
     if (!this.instance) {
-      this.instance = new SchemaGenerator(entities, app);
+      this.instance = new EntityGenerator(entities, app);
     }
     return this.instance;
   }

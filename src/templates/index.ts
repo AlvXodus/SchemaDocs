@@ -1,1 +1,1 @@
-export * from "./html_template.js";
+export * from "./html_template";
