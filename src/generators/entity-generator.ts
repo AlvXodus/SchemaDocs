@@ -47,6 +47,7 @@ export class EntityGenerator {
 
   setVersion(version: string) {
     this.version = version;
+    return this;
   }
 
   build() {

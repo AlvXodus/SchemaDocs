@@ -1,6 +1,6 @@
 {
   "name": "entity-docs",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "type": "module",
   "homepage": "",
   "main": "./cjs/index.js",
@@ -18,7 +18,9 @@
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
     "build:umd": "rollup --config rollup.config.js",
     "build:types": "tsc --project tsconfig.prod.types.json",
-    "build:all": "npm run build:clean && npm run build:esm2015 && npm run build:esm5 && npm run build:cjs && npm run build:umd && npm run build:types"
+    "copy-files": "cp package.json ./build/ && cp README.md ./build/",
+    "build:all": "npm run build:clean && npm run build:esm2015 && npm run build:esm5 && npm run build:cjs && npm run build:umd && npm run build:types && npm run copy-files",
+    "release": "npm run build:all && npm publish ./build"
   },
   "keywords": [
     "entity",

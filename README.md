@@ -1,4 +1,4 @@
-# SchemaDocs
+# EntityDocs
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@
 
 ## Overview
 
-Schema Generator is a TypeScript-based library that automates the creation of entity documentation. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
+Entity Docs Generator is a TypeScript-based library that automates the creation of entity documentation. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
 
 ## Installation
 
@@ -38,7 +38,7 @@ The `TableProp` decorator defines metadata for database tables.
 **Example:**
 
 ```ts
-import { TableProp, ColProp } from "schema-generator";
+import { TableProp, ColProp } from "entity-generator";
 
 @TableProp({ name: "users", description: "Stores user details" })
 class User {
@@ -68,20 +68,19 @@ class Product {
 
 ### Initializing Schema Generator
 
-To generate documentation, initialize the `SchemaGenerator` with the defined entities and the Express app instance.
+To generate documentation, initialize the `EntityGenerator` with the defined entities and the Express app instance.
 
 **Example:**
 
 ```ts
 import express from "express";
-import { SchemaGenerator } from "schema-generator";
+import { EntityGenerator } from "schema-generator";
 import { User, Product } from "./models";
 
 const app = express();
 const schemaGenerator = SchemaGenerator.initialize([User, Product], app);
 
-schemaGenerator
-  .addEntities()
+EntityGenerator.addEntities()
   .setTitle("API Schema Documentation")
   .setDescription(
     "This document provides an overview of all database tables and their columns."

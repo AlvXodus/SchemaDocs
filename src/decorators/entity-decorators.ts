@@ -1,6 +1,6 @@
 import { ISchemaCols, ISchemaTable } from "../interfaces/schemas.interface";
 
-import { Schemas, TableNames } from "../utils/table_and_cols";
+import { Schemas, TableNames } from "../utils/table_and_cols.js";
 
 export function TableProp(property: ISchemaTable) {
   return function (target: any) {
