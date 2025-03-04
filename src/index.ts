@@ -1,2 +1,5 @@
-export { EntityGenerator } from "./generators/entity-generator.js";
-export { ColProp, TableProp } from "./decorators/entity-decorators.js";
+export * from "./decorators";
+export * from "./generators";
+export * from "./interfaces";
+export * from "./templates";
+export * from "./utils";
