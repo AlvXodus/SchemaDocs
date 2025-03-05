@@ -1,26 +1,51 @@
 {
   "name": "entity-docs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "homepage": "",
   "main": "./cjs/index.js",
   "module": "./esm5/index.js",
   "es2015": "./esm2015/index.js",
   "typings": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./types/index.d.ts"
+    },
+    "./decorators": {
+      "import": "./esm/decorators/index.js",
+      "require": "./cjs/decorators/index.js",
+      "types": "./types/decorators/index.d.ts"
+    },
+    "./generator": {
+      "import": "./esm/generator/EntityGenerator.js",
+      "require": "./cjs/generator/EntityGenerator.js",
+      "types": "./types/generator/EntityGenerator.d.ts"
+    },
+    "./interfaces": {
+      "import": "./esm/interfaces/index.js",
+      "require": "./cjs/interfaces/index.js",
+      "types": "./types/interfaces/index.d.ts"
+    }
+  },
+  "files": [
+    "cjs",
+    "esm",
+    "types",
+    "README.md"
+  ],
   "repository": {
     "url": "https://github.com/AlvXodus/SchemaDocs"
   },
   "scripts": {
-    "build": "npm run build:cjs",
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && npm run build:types",
     "build:clean": "rimraf build",
-    "build:esm2015": "tsc --project tsconfig.prod.esm2015.json",
-    "build:esm5": "tsc --project tsconfig.prod.esm5.json",
+    "build:esm": "tsc --project tsconfig.prod.esm.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
-    "build:umd": "rollup --config rollup.config.js",
     "build:types": "tsc --project tsconfig.prod.types.json",
     "copy-files": "cp package.json ./build/ && cp README.md ./build/",
-    "build:all": "npm run build:clean && npm run build:esm2015 && npm run build:esm5 && npm run build:cjs && npm run build:umd && npm run build:types && npm run copy-files",
-    "release": "npm run build:all && npm publish ./build"
+    "release": "npm run build && npm run copy-files && npm publish ./build"
   },
   "keywords": [
     "entity",

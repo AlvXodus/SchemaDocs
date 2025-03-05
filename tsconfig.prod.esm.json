@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "CommonJS",
+    "target": "ES2020",
+    "module": "ESNext",
     "declaration": false,
-    "outDir": "build/cjs",
+    "outDir": "build/esm",
     "moduleResolution": "node"
   },
   "include": ["src"]
