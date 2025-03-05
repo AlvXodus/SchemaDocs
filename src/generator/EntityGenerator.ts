@@ -1,11 +1,11 @@
-import { ISchemas } from "../interfaces";
-import { htmlTemplate } from "../templates/html_template";
+import { ISchemas } from "../interfaces/index.js";
+import { htmlTemplate } from "../templates/html_template.js";
 import {
   createSchemaTable,
   createSchemaTitle,
   Schemas,
   TableNames,
-} from "../utils/table_and_cols";
+} from "../utils/table_and_cols.js";
 
 export class EntityGenerator {
   private entities: any[];

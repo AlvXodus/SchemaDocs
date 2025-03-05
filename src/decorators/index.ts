@@ -1,5 +1,5 @@
-import { ISchemaCols, ISchemaTable } from "../interfaces";
-import { Schemas, TableNames } from "../utils/table_and_cols";
+import { ISchemaCols, ISchemaTable } from "../interfaces/index.js";
+import { Schemas, TableNames } from "../utils/table_and_cols.js";
 
 /**
  * A decorator that adds a table to the schema metadata.
