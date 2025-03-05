@@ -1,11 +1,10 @@
 {
   "name": "entity-docs",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "type": "module",
   "homepage": "",
   "main": "./cjs/index.js",
-  "module": "./esm5/index.js",
-  "es2015": "./esm2015/index.js",
+  "module": "./esm/index.js",
   "typings": "./types/index.d.ts",
   "exports": {
     ".": {

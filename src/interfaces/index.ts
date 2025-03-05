@@ -1,25 +1,19 @@
+export interface ITableName {
+  [key: string]: ISchemaTable;
+}
 /**
  * Interface for the column properties.
  */
 export interface ISchemaCols {
-  /** The column name */
   name?: string;
-  /** The column type */
-  type?: SqlDataType;
-  /** Whether the column is a primary key */
-  primary?: boolean;
-  /** Whether the column is required */
-  required?: boolean;
-  /** The column length */
-  length?: number;
-  /** The column description */
-  description?: string;
-  /** The column default value */
+  type: SqlDataType;
+  nullable?: boolean | string;
   default?: any;
-  /** The enum values for the column */
-  enum?: string[];
+  primary_key?: boolean;
+  indexed?: boolean;
+  example?: any;
+  description?: string;
 }
-
 /**
  * Interface for the table properties.
  */

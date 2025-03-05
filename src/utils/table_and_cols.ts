@@ -1,9 +1,4 @@
-import {
-  ISchemaCols,
-  ISchemas,
-  ISchemaTable,
-  ITableName,
-} from "../interfaces/schemas.interface";
+import { ISchemaCols, ISchemas, ISchemaTable, ITableName } from "../interfaces";
 
 export let Schemas: ISchemas = {}; // Ensure global schemas exists
 export const TableNames: ITableName = {};
