@@ -1,6 +1,6 @@
 {
   "name": "entity-docs",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "type": "module",
   "homepage": "",
   "main": "./cjs/index.js",
@@ -61,7 +61,6 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^22.13.7",
-    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "rimraf": "^6.0.1",
     "rollup": "^4.34.8",
@@ -71,6 +70,7 @@
   },
   "dependencies": {
     "@types/express": "^5.0.0",
+    "@types/react": "^19.0.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   }
