@@ -1,3 +1,4 @@
+import { createReactSchema } from "../components/index.js";
 import { ISchemaCols, ISchemaTable } from "../interfaces/index.js";
 import { Schemas, TableNames } from "../utils/table_and_cols.js";
 
@@ -41,4 +42,13 @@ export function ColProp(property: ISchemaCols) {
     }
     Schemas[tableName][propertyName] = property;
   };
+}
+
+/**
+ * Generates a React component from the schema metadata.
+ *
+ * @returns A React component representing the schema.
+ */
+export function generateSchemaComponent() {
+  return createReactSchema(Schemas, TableNames);
 }

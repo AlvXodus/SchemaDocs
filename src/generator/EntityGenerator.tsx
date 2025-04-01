@@ -1,11 +1,9 @@
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 import { ISchemas } from "../interfaces/index.js";
 import { htmlTemplate } from "../templates/html_template.js";
-import {
-  createSchemaTable,
-  createSchemaTitle,
-  Schemas,
-  TableNames,
-} from "../utils/table_and_cols.js";
+import { Schemas, TableNames } from "../utils/table_and_cols.js";
+import { SchemaViewer } from "../components/index.js";
 
 export class EntityGenerator {
   private entities: any[];
@@ -93,6 +91,15 @@ export class EntityGenerator {
   build() {
     return this.buildTemplate(Schemas);
   }
+
+  /**
+   * Returns a React component representing the schema documentation.
+   * @returns React component for the schema documentation.
+   */
+  buildReactComponent() {
+    return <SchemaViewer schemas={Schemas} tableNames={TableNames} />;
+  }
+
   /**
    * Initializes a singleton instance of the EntityGenerator.
    *
@@ -100,33 +107,63 @@ export class EntityGenerator {
    * @param app - An instance of an Express application.
    * @returns The singleton instance of EntityGenerator.
    */
-
   static initialize(entities: any[], app: any) {
     if (!this.instance) {
       this.instance = new EntityGenerator(entities, app);
     }
     return this.instance;
   }
+
   /**
    * Builds the HTML template for the schema documentation and mounts it to the Express app.
+   * Now uses React components with colors for rendering.
    *
    * @param schemas - The map of table names to their respective schemas.
    * @returns The generated HTML template.
    */
   public buildTemplate(schemas: ISchemas) {
-    let tablesHTML = "";
+    // Create the React component for the schema with colors
+    const schemaComponent = (
+      <SchemaViewer schemas={schemas} tableNames={TableNames} />
+    );
 
-    for (const item of Object.keys(schemas)) {
-      const tableProp = TableNames[item];
-      const title = createSchemaTitle(tableProp);
-      const table = createSchemaTable(item, schemas[item]);
-      tablesHTML += title + table; // Use outerHTML to preserve table structure
-    }
+    // Convert React component to HTML string
+    const tablesHTML = ReactDOMServer.renderToString(schemaComponent);
+
+    // Get the complete HTML document
     const html = htmlTemplate(tablesHTML, this.title, this.description);
 
+    // Set up the Express route
     this.app.get(this.path, (req: any, res: any) => {
       res.send(html);
     });
+
     return html;
+  }
+
+  /**
+   * Sets up a React route that serves the schema documentation as a React component.
+   * This is an alternative to the HTML-based approach.
+   *
+   * @param reactRouter - A React router instance.
+   * @returns The current instance of EntityGenerator.
+   */
+  public setupReactRoute(reactRouter: any) {
+    const SchemaDocsComponent = () => {
+      return (
+        <div className="schema-documentation">
+          <h1>{this.title}</h1>
+          <p className="description">{this.description}</p>
+          <SchemaViewer schemas={Schemas} tableNames={TableNames} />
+        </div>
+      );
+    };
+
+    // Add the route to the router
+    reactRouter.get(this.path, (req: any, res: any) => {
+      res.render("SchemaDocsComponent", { component: <SchemaDocsComponent /> });
+    });
+
+    return this;
   }
 }
