@@ -8,11 +8,12 @@ import { Schemas, TableNames } from "../utils/table_and_cols.js";
  * @param property - The table properties.
  * @returns A decorator function that adds the table to the schema metadata.
  */
-export function TableProp(property: ISchemaTable) {
+export function Table(property: ISchemaTable) {
   return function (target: any) {
     const name = property.name ?? target.name;
     const tableName = target.name;
-    const description = property.description ? target.description : "";
+
+    const description = property.description ? property.description : "";
 
     TableNames[tableName] = {
       name,
@@ -31,7 +32,7 @@ export function TableProp(property: ISchemaTable) {
  * @param property - The column properties.
  * @returns A decorator function that adds the column to the schema metadata.
  */
-export function ColProp(property: ISchemaCols) {
+export function Prop(property: ISchemaCols) {
   // console.log(property);
   return function (target: any, propertyName: any) {
     const tableName = target.constructor.name;

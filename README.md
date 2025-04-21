@@ -1,4 +1,4 @@
-# EntityDocs
+# Entity UI
 
 ## Table of Contents
 
@@ -6,8 +6,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
   - [Decorators](#decorators)
-    - [`@TableProp`](#tableprop)
-    - [`@ColProp`](#colprop)
+    - [`@Table`](#table)
+    - [`@Prop`](#prop)
   - [Initializing Schema Generator](#initializing-schema-generator)
 - [API Endpoint](#api-endpoint)
 - [Sample Response](#sample-response)
@@ -17,51 +17,51 @@
 
 ## Overview
 
-Entity Docs Generator is a TypeScript-based library that automates the creation of entity documentation. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
+Entity Docs Generator is a TypeScript-based library that automates the creation of entity UI. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
 
 ## Installation
 
 To use this library in your project, install it via npm:
 
 ```sh
-npm install entity-docs
+npm install entity-ui
 ```
 
 ## Usage
 
 ### Decorators
 
-#### `@TableProp`
+#### `@Table`
 
-The `TableProp` decorator defines metadata for database tables.
+The `Table` decorator defines metadata for database tables.
 
 **Example:**
 
 ```ts
-import { TableProp, ColProp } from "entity-generator";
+import { Table, Prop } from "entity-generator";
 
-@TableProp({ name: "users", description: "Stores user details" })
+@Table({ name: "users", description: "Stores user details" })
 class User {
-  @ColProp({ type: "string", required: true })
+  @Prop({ type: "string", required: true })
   name: string;
 
-  @ColProp({ type: "string", required: true })
+  @Prop({ type: "string", required: true })
   email: string;
 }
 ```
 
-#### `@ColProp`
+#### `@Prop`
 
-The `ColProp` decorator defines column properties for a table.
+The `Prop` decorator defines column properties for a table.
 
 **Example:**
 
 ```ts
 class Product {
-  @ColProp({ type: "number", required: true })
+  @Prop({ type: "number", required: true })
   id: number;
 
-  @ColProp({ type: "string", required: true })
+  @Prop({ type: "string", required: true })
   name: string;
 }
 ```
@@ -85,6 +85,7 @@ EntityGenerator.addEntities()
   .setDescription(
     "This document provides an overview of all database tables and their columns."
   )
+  .setVersion("0.0.1")
   .build();
 
 app.listen(3000, () => {
@@ -107,38 +108,7 @@ The generated HTML document contains a list of tables with their respective colu
 ### Example Output:
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>API Schema Documentation</title>
-  </head>
-  <body>
-    <h1>API Schema Documentation</h1>
-    <p>
-      This document provides an overview of all database tables and their
-      columns.
-    </p>
-    <h2>Users</h2>
-    <p>Stores user details</p>
-    <table>
-      <tr>
-        <th>Column</th>
-        <th>Type</th>
-        <th>Required</th>
-      </tr>
-      <tr>
-        <td>name</td>
-        <td>string</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td>email</td>
-        <td>string</td>
-        <td>Yes</td>
-      </tr>
-    </table>
-  </body>
-</html>
+
 ```
 
 ## Use Cases

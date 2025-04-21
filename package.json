@@ -1,31 +1,41 @@
 {
-  "name": "entity-docs",
-  "version": "0.0.14",
-  "type": "module",
+  "name": "entity-ui",
+  "version": "0.0.2",
+  "type": "commonjs",
   "homepage": "",
   "main": "./cjs/index.js",
-  "module": "./esm/index.js",
+  "module": "./esm/index.mjs",
   "typings": "./types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./esm/index.js",
+      "import": "./esm/index.mjs",
       "require": "./cjs/index.js",
       "types": "./types/index.d.ts"
     },
     "./decorators": {
-      "import": "./esm/decorators/index.js",
+      "import": "./esm/decorators/index.mjs",
       "require": "./cjs/decorators/index.js",
       "types": "./types/decorators/index.d.ts"
     },
     "./generator": {
-      "import": "./esm/generator/EntityGenerator.js",
+      "import": "./esm/generator/EntityGenerator.mjs",
       "require": "./cjs/generator/EntityGenerator.js",
       "types": "./types/generator/EntityGenerator.d.ts"
     },
     "./interfaces": {
-      "import": "./esm/interfaces/index.js",
+      "import": "./esm/interfaces/index.mjs",
       "require": "./cjs/interfaces/index.js",
       "types": "./types/interfaces/index.d.ts"
+    },
+    "./components": {
+      "import": "./esm/components/index.mjs",
+      "require": "./cjs/components/index.js",
+      "types": "./types/components/index.d.ts"
+    },
+    "./utils": {
+      "import": "./esm/utils/index.mjs",
+      "require": "./cjs/utils/index.js",
+      "types": "./types/utils/index.d.ts"
     }
   },
   "files": [
@@ -38,7 +48,7 @@
     "url": "https://github.com/AlvXodus/SchemaDocs"
   },
   "scripts": {
-    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && node rename-esm.js &&npm run build:types",
     "build:clean": "rimraf build",
     "build:esm": "tsc --project tsconfig.prod.esm.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
@@ -57,20 +67,14 @@
   "license": "MIT",
   "description": "Generate schema docs for various schema types",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.2",
-    "@rollup/plugin-node-resolve": "^16.0.0",
-    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^22.13.7",
     "@types/react-dom": "^19.0.4",
     "rimraf": "^6.0.1",
-    "rollup": "^4.34.8",
-    "rollup-plugin-dts": "^6.1.1",
-    "tsup": "^8.3.6",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@types/express": "^5.0.0",
     "@types/react": "^19.0.12",
+    "express": "^5.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   }

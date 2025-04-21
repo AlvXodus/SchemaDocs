@@ -7,8 +7,8 @@
     "lib": ["ES2018", "dom"],
     "outDir": "build/node",
     "rootDir": "./src",
-    "strict": true,
-    "noUnusedParameters": false,
+    // "strict": true,
+    // "noUnusedParameters": false,
 
     "sourceMap": true,
     "removeComments": false,
