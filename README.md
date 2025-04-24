@@ -78,9 +78,8 @@ import { EntityGenerator } from "schema-generator";
 import { User, Product } from "./models";
 
 const app = express();
-const schemaGenerator = SchemaGenerator.initialize([User, Product], app);
-
-EntityGenerator.addEntities()
+EntityGenerator.initialize([User, Product], app)
+  .addEntities()
   .setTitle("API Schema Documentation")
   .setDescription(
     "This document provides an overview of all database tables and their columns."
