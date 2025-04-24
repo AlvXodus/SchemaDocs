@@ -112,7 +112,7 @@ The generated HTML document contains a list of tables with their respective colu
 
 ## Use Cases
 
-- **Database Documentation**: Automatically generate schema documentation for your database tables.
+- **Database Documentation**: Automatically generate schema documentation UI for your database tables.
 - **API Development**: Define structured metadata for your database and expose it via an endpoint.
 - **Data Validation**: Ensure consistency in table and column definitions across projects.
 
