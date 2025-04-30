@@ -1,26 +1,60 @@
 {
-  "name": "entity-docs",
-  "version": "0.0.6",
-  "type": "module",
+  "name": "entities-ui",
+  "version": "0.0.5",
+  "type": "commonjs",
   "homepage": "",
   "main": "./cjs/index.js",
-  "module": "./esm5/index.js",
-  "es2015": "./esm2015/index.js",
+  "module": "./esm/index.mjs",
   "typings": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./esm/index.mjs",
+      "require": "./cjs/index.js",
+      "types": "./types/index.d.ts"
+    },
+    "./decorators": {
+      "import": "./esm/decorators/index.mjs",
+      "require": "./cjs/decorators/index.js",
+      "types": "./types/decorators/index.d.ts"
+    },
+    "./generator": {
+      "import": "./esm/generator/EntityGenerator.mjs",
+      "require": "./cjs/generator/EntityGenerator.js",
+      "types": "./types/generator/EntityGenerator.d.ts"
+    },
+    "./interfaces": {
+      "import": "./esm/interfaces/index.mjs",
+      "require": "./cjs/interfaces/index.js",
+      "types": "./types/interfaces/index.d.ts"
+    },
+    "./components": {
+      "import": "./esm/components/index.mjs",
+      "require": "./cjs/components/index.js",
+      "types": "./types/components/index.d.ts"
+    },
+    "./utils": {
+      "import": "./esm/utils/index.mjs",
+      "require": "./cjs/utils/index.js",
+      "types": "./types/utils/index.d.ts"
+    }
+  },
+  "files": [
+    "cjs",
+    "esm",
+    "types",
+    "README.md"
+  ],
   "repository": {
     "url": "https://github.com/AlvXodus/SchemaDocs"
   },
   "scripts": {
-    "build": "npm run build:cjs",
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && node rename-esm.js &&npm run build:types",
     "build:clean": "rimraf build",
-    "build:esm2015": "tsc --project tsconfig.prod.esm2015.json",
-    "build:esm5": "tsc --project tsconfig.prod.esm5.json",
+    "build:esm": "tsc --project tsconfig.prod.esm.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
-    "build:umd": "rollup --config rollup.config.js",
     "build:types": "tsc --project tsconfig.prod.types.json",
-    "copy-files": "cp package.json ./build/ && cp README.md ./build/",
-    "build:all": "npm run build:clean && npm run build:esm2015 && npm run build:esm5 && npm run build:cjs && npm run build:umd && npm run build:types && npm run copy-files",
-    "release": "npm run build:all && npm publish ./build"
+    "copy-files": "cp package.json ./build/ && cp README.md ./build/ && cp sample.png ./build/",
+    "release": "npm run build && npm run copy-files && npm publish ./build"
   },
   "keywords": [
     "entity",
@@ -33,17 +67,14 @@
   "license": "MIT",
   "description": "Generate schema docs for various schema types",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.2",
-    "@rollup/plugin-node-resolve": "^16.0.0",
-    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^22.13.7",
+    "@types/react-dom": "^19.0.4",
     "rimraf": "^6.0.1",
-    "rollup": "^4.34.8",
-    "rollup-plugin-dts": "^6.1.1",
-    "tsup": "^8.3.6",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@types/express": "^5.0.0"
+    "@types/react": "^19.0.12",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   }
 }

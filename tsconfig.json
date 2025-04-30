@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "module": "CommonJS",
     "moduleResolution": "node",
     "target": "ES2018",
-    "lib": ["ES2018"],
+    "lib": ["ES2018", "dom"],
     "outDir": "build/node",
     "rootDir": "./src",
-    "strict": true,
-    "noUnusedParameters": false,
+    // "strict": true,
+    // "noUnusedParameters": false,
 
     "sourceMap": true,
     "removeComments": false,

@@ -1,4 +1,4 @@
-# EntityDocs
+# Entity UI
 
 ## Table of Contents
 
@@ -6,8 +6,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
   - [Decorators](#decorators)
-    - [`@TableProp`](#tableprop)
-    - [`@ColProp`](#colprop)
+    - [`@Table`](#table)
+    - [`@Prop`](#prop)
   - [Initializing Schema Generator](#initializing-schema-generator)
 - [API Endpoint](#api-endpoint)
 - [Sample Response](#sample-response)
@@ -17,51 +17,100 @@
 
 ## Overview
 
-Entity Docs Generator is a TypeScript-based library that automates the creation of entity documentation. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
+Entity Docs Generator is a TypeScript-based library that automates the creation of entity UI. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema. see example output below
+
+![Logo](./sample.png)
 
 ## Installation
 
 To use this library in your project, install it via npm:
 
 ```sh
-npm install entity-docs
+npm install entity-ui
 ```
 
 ## Usage
 
 ### Decorators
 
-#### `@TableProp`
+#### `@Table`
 
-The `TableProp` decorator defines metadata for database tables.
+The `Table` decorator defines metadata for database tables.
 
 **Example:**
 
 ```ts
-import { TableProp, ColProp } from "entity-generator";
+import { Table, Props } from "entity-generator";
 
-@TableProp({ name: "users", description: "Stores user details" })
-class User {
-  @ColProp({ type: "string", required: true })
-  name: string;
+@Table({
+  name: "users",
+  description: "Users table",
+})
+class TestUser {
+  @Props({
+    name: "name",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "John Doe",
+    description: "Name of the user",
+  })
+  first_name: string;
 
-  @ColProp({ type: "string", required: true })
+  @Props({
+    name: "last_name",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "Doe",
+    description: "Last name of the user",
+  })
+  last_name: string;
+
+  @Props({
+    name: "email",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "test@me.com",
+    description: "Email of the user",
+  })
   email: string;
+
+  @Props({
+    name: "role",
+    type: "Varchar",
+    nullable: true,
+    default: "User",
+    example: "Admin",
+    description: "Role of the user",
+  })
+  role: string;
+
+  @Props({
+    name: "username",
+    type: "Varchar",
+    nullable: true,
+    default: "",
+    example: "test-user",
+    description: "Username of the user",
+  })
+  username: string;
 }
 ```
 
-#### `@ColProp`
+#### `@Props`
 
-The `ColProp` decorator defines column properties for a table.
+The `Props` decorator defines column properties for a table.
 
 **Example:**
 
 ```ts
 class Product {
-  @ColProp({ type: "number", required: true })
+  @Props({ type: "number", required: true })
   id: number;
 
-  @ColProp({ type: "string", required: true })
+  @Props({ type: "string", required: true })
   name: string;
 }
 ```
@@ -77,73 +126,29 @@ import express from "express";
 import { EntityGenerator } from "schema-generator";
 import { User, Product } from "./models";
 
-const app = express();
-const schemaGenerator = SchemaGenerator.initialize([User, Product], app);
-
-EntityGenerator.addEntities()
+EntityGenerator.initialize([User, Product], app)
+  .addEntities()
   .setTitle("API Schema Documentation")
   .setDescription(
     "This document provides an overview of all database tables and their columns."
   )
+  .setVersion("0.0.1")
   .build();
-
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
-});
 ```
 
 ## API Endpoint
 
 The schema documentation will be accessible via:
 
-```
-GET /entity-docs
-```
-
-## Sample Response
-
-The generated HTML document contains a list of tables with their respective columns and metadata.
-
-### Example Output:
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>API Schema Documentation</title>
-  </head>
-  <body>
-    <h1>API Schema Documentation</h1>
-    <p>
-      This document provides an overview of all database tables and their
-      columns.
-    </p>
-    <h2>Users</h2>
-    <p>Stores user details</p>
-    <table>
-      <tr>
-        <th>Column</th>
-        <th>Type</th>
-        <th>Required</th>
-      </tr>
-      <tr>
-        <td>name</td>
-        <td>string</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td>email</td>
-        <td>string</td>
-        <td>Yes</td>
-      </tr>
-    </table>
-  </body>
-</html>
+```ts
+app.get("/api-docs", (_req, res) => {
+  res.send(schema);
+});
 ```
 
 ## Use Cases
 
-- **Database Documentation**: Automatically generate schema documentation for your database tables.
+- **Database Documentation**: Automatically generate schema documentation UI for your database tables.
 - **API Development**: Define structured metadata for your database and expose it via an endpoint.
 - **Data Validation**: Ensure consistency in table and column definitions across projects.
 
