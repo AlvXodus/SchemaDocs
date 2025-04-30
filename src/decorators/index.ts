@@ -32,7 +32,7 @@ export function Table(property: ISchemaTable) {
  * @param property - The column properties.
  * @returns A decorator function that adds the column to the schema metadata.
  */
-export function Prop(property: ISchemaCols) {
+export function Props(property: ISchemaCols) {
   // console.log(property);
   return function (target: any, propertyName: any) {
     const tableName = target.constructor.name;

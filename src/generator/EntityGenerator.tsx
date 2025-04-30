@@ -10,11 +10,8 @@ export class EntityGenerator {
   private static instance: EntityGenerator;
   private title: string;
   private description: string;
-  private app: any;
   private path: string;
   private version: string;
-  private stylesheetPath: string;
-
   /**
    * Constructs an instance of the EntityGenerator.
    *
@@ -23,19 +20,12 @@ export class EntityGenerator {
    * @param path - The path to use for the schema API endpoint. Defaults to "/entity-docs".
    * @param stylesheetPath - Path to CSS file. Defaults to "../styles/schema-styles.css".
    */
-  private constructor(
-    entities: any[],
-    app: any,
-    path: string = "/entity-docs",
-    stylesheetPath: string = "../styles/schema-styles.css"
-  ) {
+  private constructor(entities: any[], path: string = "/entity-docs") {
     this.entities = entities;
     this.title = "Entity Docs";
     this.description = "Entity documentation (please update)";
     this.version = "0.0.1";
-    this.app = app;
     this.path = path;
-    this.stylesheetPath = stylesheetPath;
   }
 
   /**
@@ -86,17 +76,6 @@ export class EntityGenerator {
   }
 
   /**
-   * Sets the path to the CSS stylesheet.
-   *
-   * @param stylesheetPath - Path to the CSS file.
-   * @returns The current instance of EntityGenerator.
-   */
-  setStylesheetPath(stylesheetPath: string) {
-    this.stylesheetPath = stylesheetPath;
-    return this;
-  }
-
-  /**
    * Builds the HTML template for the schema documentation.
    * This method is usually called after setting the title and description.
    * @returns The generated HTML template.
@@ -122,14 +101,9 @@ export class EntityGenerator {
    * @param stylesheetPath - Path to CSS file. Defaults to "../styles/schema-styles.css".
    * @returns The singleton instance of EntityGenerator.
    */
-  static initialize(
-    entities: any[],
-    app: any,
-    path: string = "/entity-docs",
-    stylesheetPath: string = "../styles/schema-styles.css"
-  ) {
+  static initialize(entities: any[]) {
     if (!this.instance) {
-      this.instance = new EntityGenerator(entities, app, path, stylesheetPath);
+      this.instance = new EntityGenerator(entities);
     }
     return this.instance;
   }
@@ -193,51 +167,6 @@ export class EntityGenerator {
     // Get the complete HTML document
     const html = this.htmlTemplate(tablesHTML);
 
-    // Set up the Express route for serving the HTML
-    this.app.get(this.path, (req: any, res: any) => {
-      res.send(html);
-    });
-
-    // Set up a static route to serve the CSS directly if needed
-    this.app.get(`${this.path}/styles.css`, (req: any, res: any) => {
-      res.type("text/css").send(this.loadStyles());
-    });
-
     return html;
-  }
-
-  /**
-   * Sets up a React route that serves the schema documentation as a React component.
-   * Updated to use external stylesheet.
-   *
-   * @param reactRouter - A React router instance.
-   * @returns The current instance of EntityGenerator.
-   */
-  public setupReactRoute(reactRouter: any) {
-    const SchemaDocsComponent = () => {
-      return (
-        <div className="schema-documentation">
-          <h1>{this.title}</h1>
-          <p className="description">{this.description}</p>
-          {this.version && <p className="version">Version: {this.version}</p>}
-          <SchemaViewer schemas={Schemas} tableNames={TableNames} />
-        </div>
-      );
-    };
-
-    // Add the routes to the router
-    reactRouter.get(this.path, (req: any, res: any) => {
-      res.render("SchemaDocsComponent", {
-        component: <SchemaDocsComponent />,
-        stylesheetPath: `${this.path}/styles.css`,
-      });
-    });
-
-    // Route to serve the CSS file
-    reactRouter.get(`${this.path}/styles.css`, (req: any, res: any) => {
-      res.type("text/css").send(this.loadStyles());
-    });
-
-    return this;
   }
 }

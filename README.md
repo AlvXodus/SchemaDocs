@@ -17,7 +17,9 @@
 
 ## Overview
 
-Entity Docs Generator is a TypeScript-based library that automates the creation of entity UI. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema.
+Entity Docs Generator is a TypeScript-based library that automates the creation of entity UI. It provides decorators for defining table and column properties, and dynamically generates an HTML representation of the schema. see example output below
+
+![Logo](./sample.png)
 
 ## Installation
 
@@ -38,30 +40,77 @@ The `Table` decorator defines metadata for database tables.
 **Example:**
 
 ```ts
-import { Table, Prop } from "entity-generator";
+import { Table, Props } from "entity-generator";
 
-@Table({ name: "users", description: "Stores user details" })
-class User {
-  @Prop({ type: "string", required: true })
-  name: string;
+@Table({
+  name: "users",
+  description: "Users table",
+})
+class TestUser {
+  @Props({
+    name: "name",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "John Doe",
+    description: "Name of the user",
+  })
+  first_name: string;
 
-  @Prop({ type: "string", required: true })
+  @Props({
+    name: "last_name",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "Doe",
+    description: "Last name of the user",
+  })
+  last_name: string;
+
+  @Props({
+    name: "email",
+    type: "Varchar",
+    nullable: false,
+    default: "",
+    example: "test@me.com",
+    description: "Email of the user",
+  })
   email: string;
+
+  @Props({
+    name: "role",
+    type: "Varchar",
+    nullable: true,
+    default: "User",
+    example: "Admin",
+    description: "Role of the user",
+  })
+  role: string;
+
+  @Props({
+    name: "username",
+    type: "Varchar",
+    nullable: true,
+    default: "",
+    example: "test-user",
+    description: "Username of the user",
+  })
+  username: string;
 }
 ```
 
-#### `@Prop`
+#### `@Props`
 
-The `Prop` decorator defines column properties for a table.
+The `Props` decorator defines column properties for a table.
 
 **Example:**
 
 ```ts
 class Product {
-  @Prop({ type: "number", required: true })
+  @Props({ type: "number", required: true })
   id: number;
 
-  @Prop({ type: "string", required: true })
+  @Props({ type: "string", required: true })
   name: string;
 }
 ```
@@ -77,7 +126,6 @@ import express from "express";
 import { EntityGenerator } from "schema-generator";
 import { User, Product } from "./models";
 
-const app = express();
 EntityGenerator.initialize([User, Product], app)
   .addEntities()
   .setTitle("API Schema Documentation")
@@ -86,28 +134,16 @@ EntityGenerator.initialize([User, Product], app)
   )
   .setVersion("0.0.1")
   .build();
-
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
-});
 ```
 
 ## API Endpoint
 
 The schema documentation will be accessible via:
 
-```
-GET /entity-docs
-```
-
-## Sample Response
-
-The generated HTML document contains a list of tables with their respective columns and metadata.
-
-### Example Output:
-
-```html
-
+```ts
+app.get("/api-docs", (_req, res) => {
+  res.send(schema);
+});
 ```
 
 ## Use Cases

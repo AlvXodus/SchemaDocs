@@ -1,5 +1,5 @@
 // Re-export decorators
-export { Table, Prop } from "./decorators/index.js";
+export { Table, Props } from "./decorators/index.js";
 
 // Re-export EntityGenerator
 export { EntityGenerator } from "./generator/EntityGenerator.js";
@@ -9,14 +9,14 @@ import { ISchemaCols, ISchemaTable, ISchemas } from "./interfaces/index.js";
 export { ISchemaCols, ISchemaTable, ISchemas } from "./interfaces/index.js";
 
 // Package-level exports
-import { Table, Prop } from "./decorators/index.js";
+import { Table, Props } from "./decorators/index.js";
 import { EntityGenerator } from "./generator/EntityGenerator.js";
 import { STYLES } from "./styles/index.js";
 
 // Default export for easier ES6 import
 export default {
   Table,
-  Prop,
+  Props,
   EntityGenerator,
 };
 
