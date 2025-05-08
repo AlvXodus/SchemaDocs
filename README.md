@@ -64,16 +64,16 @@ The `Props` decorator defines column properties for a table.
 
 #### Properties
 
-| Property          | Type                | Required | Default | Description                                                              |
-| ----------------- | ------------------- | -------- | ------- | ------------------------------------------------------------------------ |
-| **`name`**        | `string`            | No       | -       | The name of the column in the database table                             |
-| **`type`**        | `SqlDataType`       | **Yes**  | -       | The SQL data type for the column (e.g., `VARCHAR`, `INTEGER`, `BOOLEAN`) |
-| **`nullable`**    | `boolean \| string` | No       | `false` | Whether the column allows NULL values.                                   |
-| **`default`**     | `any`               | No       | -       | Default value for the column.                                            |
-| **`primary_key`** | `boolean`           | No       | `false` | Whether the column is a PRIMARY KEY                                      |
-| **`indexed`**     | `boolean`           | No       | `false` | Whether to create an index for this column                               |
-| **`example`**     | `any`               | No       | -       | Example value for documentation purposes                                 |
-| **`description`** | `string`            | No       | -       | Human-readable column description for documentation                      |
+| Property          | Type          | Required | Default | Description                                                              |
+| ----------------- | ------------- | -------- | ------- | ------------------------------------------------------------------------ |
+| **`name`**        | `string`      | No       | -       | The name of the column in the database table                             |
+| **`type`**        | `SqlDataType` | **Yes**  | -       | The SQL data type for the column (e.g., `VARCHAR`, `INTEGER`, `BOOLEAN`) |
+| **`nullable`**    | `boolean`     | No       | `false` | Whether the column allows NULL values.                                   |
+| **`default`**     | `any`         | No       | -       | Default value for the column.                                            |
+| **`primary_key`** | `boolean`     | No       | `false` | Whether the column is a PRIMARY KEY                                      |
+| **`indexed`**     | `boolean`     | No       | `false` | Whether to create an index for this column                               |
+| **`example`**     | `any`         | No       | -       | Example value for documentation purposes                                 |
+| **`description`** | `string`      | No       | -       | Human-readable column description for documentation                      |
 
 ## Example Usage
 
