@@ -4,11 +4,15 @@
 
 - [Overview](#overview)
 - [Installation](#installation)
+- [Decorators](#decorators)
+  - [`@Table`](#table)
+  - [`@Props`](#props)
 - [Usage](#usage)
-  - [Decorators](#decorators)
-    - [`@Table`](#table)
-    - [`@Prop`](#prop)
-  - [Initializing Schema Generator](#initializing-schema-generator)
+  - [TypeOrm](#typeorm)
+  - [Mongoose](#mongoose)
+- [Initializing Schema Generator](#initializing-schema-generator)
+  - [Express App](#express-app)
+  - [Nestjs App](#nestjs-app)
 - [API Endpoint](#api-endpoint)
 - [Sample Response](#sample-response)
   - [Example Output](#example-output)
@@ -26,16 +30,21 @@ Entity Docs Generator is a TypeScript-based library that automates the creation 
 To use this library in your project, install it via npm:
 
 ```sh
-npm install entity-ui
+npm install entities-ui
 ```
-
-## Usage
 
 ### Decorators
 
 #### `@Table`
 
 The `Table` decorator defines metadata for database tables.
+
+#### Properties
+
+| Property          | Type     | Required | Default | Description                                 |
+| ----------------- | -------- | -------- | ------- | ------------------------------------------- |
+| **`name`**        | `string` | No       | -       | The name of the table in the database       |
+| **`description`** | `string` | No       | -       | Human-readable column description for table |
 
 **Example:**
 
@@ -47,55 +56,8 @@ import { Table, Props } from "entity-generator";
   description: "Users table",
 })
 class TestUser {
-  @Props({
-    name: "name",
-    type: "Varchar",
-    nullable: false,
-    default: "",
-    example: "John Doe",
-    description: "Name of the user",
-  })
   first_name: string;
-
-  @Props({
-    name: "last_name",
-    type: "Varchar",
-    nullable: false,
-    default: "",
-    example: "Doe",
-    description: "Last name of the user",
-  })
   last_name: string;
-
-  @Props({
-    name: "email",
-    type: "Varchar",
-    nullable: false,
-    default: "",
-    example: "test@me.com",
-    description: "Email of the user",
-  })
-  email: string;
-
-  @Props({
-    name: "role",
-    type: "Varchar",
-    nullable: true,
-    default: "User",
-    example: "Admin",
-    description: "Role of the user",
-  })
-  role: string;
-
-  @Props({
-    name: "username",
-    type: "Varchar",
-    nullable: true,
-    default: "",
-    example: "test-user",
-    description: "Username of the user",
-  })
-  username: string;
 }
 ```
 
@@ -103,15 +65,111 @@ class TestUser {
 
 The `Props` decorator defines column properties for a table.
 
+#### Properties
+
+| Property          | Type                | Required | Default | Description                                                              |
+| ----------------- | ------------------- | -------- | ------- | ------------------------------------------------------------------------ |
+| **`name`**        | `string`            | No       | -       | The name of the column in the database table                             |
+| **`type`**        | `SqlDataType`       | **Yes**  | -       | The SQL data type for the column (e.g., `VARCHAR`, `INTEGER`, `BOOLEAN`) |
+| **`nullable`**    | `boolean \| string` | No       | `false` | Whether the column allows NULL values.                                   |
+| **`default`**     | `any`               | No       | -       | Default value for the column.                                            |
+| **`primary_key`** | `boolean`           | No       | `false` | Whether the column is a PRIMARY KEY                                      |
+| **`indexed`**     | `boolean`           | No       | `false` | Whether to create an index for this column                               |
+| **`example`**     | `any`               | No       | -       | Example value for documentation purposes                                 |
+| **`description`** | `string`            | No       | -       | Human-readable column description for documentation                      |
+
+## Example Usage
+
 **Example:**
 
 ```ts
 class Product {
-  @Props({ type: "number", required: true })
-  id: number;
+  @Props({
+    type: "String",
+    name: "first_name",
+    nullable: false,
+    example: "John",
+    description: "First name of the user",
+  })
+  first_name: string;
+  @Props({
+    type: "String",
+    name: "last_name",
+    nullable: false,
+    example: "Doe",
+    description: "Last name of the user",
+  })
+  last_name: string;
+}
+```
 
-  @Props({ type: "string", required: true })
-  name: string;
+### TypeOrm
+
+```ts
+@Table({
+  name: "users",
+  description: "Users table",
+})
+@Entity()
+class User {
+  @Column({
+    type: "varchar",
+  })
+  @Props({
+    type: "String",
+    name: "first_name",
+    nullable: false,
+    example: "John",
+    description: "First name of the user",
+  })
+  first_name: string;
+
+  @Column({
+    type: "varchar",
+  })
+  @Props({
+    type: "String",
+    name: "last_name",
+    nullable: false,
+    example: "Doe",
+    description: "Last name of the user",
+  })
+  last_name: string;
+}
+```
+
+### Mongoose
+
+```ts
+@Table({
+  name: "users",
+  description: "Users table",
+})
+@Schema({ timestamps: true })
+export class Product extends Document {
+  @Prop({
+    type: String,
+  })
+  @Props({
+    type: "String",
+    name: "first_name",
+    nullable: false,
+    example: "John",
+    description: "First name of the user",
+  })
+  first_name: string;
+
+  @Prop({
+    type: String,
+  })
+  @Props({
+    type: "String",
+    name: "last_name",
+    nullable: false,
+    example: "Doe",
+    description: "Last name of the user",
+  })
+  last_name: string;
 }
 ```
 
@@ -119,21 +177,44 @@ class Product {
 
 To generate documentation, initialize the `EntityGenerator` with the defined entities and the Express app instance.
 
-**Example:**
+### Express App
 
 ```ts
-import express from "express";
-import { EntityGenerator } from "schema-generator";
-import { User, Product } from "./models";
+import { express } from "express";
 
-EntityGenerator.initialize([User, Product], app)
+const schema = EntityGenerator.initialize([User, Product], app)
   .addEntities()
-  .setTitle("API Schema Documentation")
+  .setTitle("Entity UI")
   .setDescription(
     "This document provides an overview of all database tables and their columns."
   )
   .setVersion("0.0.1")
   .build();
+const app = express();
+app.get("/api-docs", (req, res) => {
+  res.send(schema);
+});
+```
+
+### Nestjs App
+
+```ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const schemas = EntityGenerator.initialize([Users])
+    .setTitle("Entity UI")
+    .setDescription(
+      "This document provides an overview of all database tables and their columns."
+    )
+    .setVersion("0.0.1")
+    .build();
+
+  const expressApp = app.getHttpAdapter().getInstance();
+  expressApp.get("/api-docs", (req, res) => res.send(schemas));
+
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
 ```
 
 ## API Endpoint
