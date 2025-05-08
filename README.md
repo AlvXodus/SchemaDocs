@@ -13,9 +13,6 @@
 - [Initializing Schema Generator](#initializing-schema-generator)
   - [Express App](#express-app)
   - [Nestjs App](#nestjs-app)
-- [API Endpoint](#api-endpoint)
-- [Sample Response](#sample-response)
-  - [Example Output](#example-output)
 - [Use Cases](#use-cases)
 - [License](#license)
 
@@ -215,16 +212,6 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
-```
-
-## API Endpoint
-
-The schema documentation will be accessible via:
-
-```ts
-app.get("/api-docs", (_req, res) => {
-  res.send(schema);
-});
 ```
 
 ## Use Cases
